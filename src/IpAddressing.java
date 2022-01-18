@@ -1,13 +1,12 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class IpAddressing {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
+        Scanner scanner = new Scanner(System.in);
         String start = scanner.next();
         String end = scanner.next();
 
@@ -19,24 +18,45 @@ public class IpAddressing {
         String[] firstAddress = start.split("[.]");
         String[] secondAddress = end.split("[.]");
 
-        return Long.parseLong(decToHex(firstAddress));
+        return Long.parseLong(decToHex(secondAddress)) - Long.parseLong(decToHex(firstAddress));
 
     }
 
-    private static long convert32bitToInt(String octet) {
-        return -1;
+    private static long convertHexToDec(char hex) {
+
+        return switch (hex) {
+            case '0' -> 0;
+            case '1' -> 1;
+            case '2' -> 2;
+            case '3' -> 3;
+            case '4' -> 4;
+            case '6' -> 6;
+            case '5' -> 5;
+            case '7' -> 7;
+            case '8' -> 8;
+            case '9' -> 9;
+            case 'A' -> 10;
+            case 'B' -> 11;
+            case 'C' -> 12;
+            case 'D' -> 13;
+            case 'E' -> 14;
+            case 'F' -> 15;
+            default -> throw new IllegalArgumentException("Incorrect value!");
+        };
     }
 
     private static String decToHex(String[] address) {
 
         int[] arrayOfAddressParts = new int[4];
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             arrayOfAddressParts[i] = Integer.parseInt(address[i]);
         }
+
 
         ArrayList<String> resultingHex = new ArrayList<>();
         int indexBis = 0;
         String zero = "0";
+        long result = 0L;
 
         for (int item : arrayOfAddressParts) {
             ArrayList<String> bits = new ArrayList<>();
@@ -65,24 +85,21 @@ public class IpAddressing {
             }
             indexBis++;
 
-//        resultingHex = Stream.of(bits)
-//                .map(bits:: )
-//                .collect(Collectors.joining(""));
-//
-//        indexBis++;
+        }
 
+//        Collections.reverse(resultingHex);
+
+        StringBuilder stringOfHex = new StringBuilder();
+
+        for (int i = 0; i < resultingHex.size(); i++) {
+            stringOfHex.append(resultingHex.get(i));
         }
 
 
-        Stream.of(resultingHex)
+        for (int i = stringOfHex.length() - 1; i >= 0; i--) {
 
-                .forEach(System.out::print);
-
-
-
-//        System.out.println(String.valueOf(resultingHex.toArray()));
-
-        return null;
+            result = result + convertHexToDec(stringOfHex.charAt(i)) * (long)Math.pow(16, i);
+        }
+        return Long.toString(result);
     }
-
 }
