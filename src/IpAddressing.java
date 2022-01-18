@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class IpAddressing {
 
@@ -75,8 +74,8 @@ public class IpAddressing {
         }
 
 
-        IntStream
-                .range(0, resultingHex.size())
+        Stream.of(resultingHex)
+
                 .forEach(System.out::print);
 
 
