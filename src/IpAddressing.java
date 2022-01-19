@@ -19,7 +19,6 @@ public class IpAddressing {
         String[] secondAddress = end.split("[.]");
 
         return Long.parseLong(decToHex(secondAddress)) - Long.parseLong(decToHex(firstAddress));
-
     }
 
     private static long convertHexToDec(char hex) {
@@ -47,16 +46,16 @@ public class IpAddressing {
 
     private static String decToHex(String[] address) {
 
+        ArrayList<String> resultingHex = new ArrayList<>();
+        StringBuilder stringOfHex = new StringBuilder();
+        String zero = "0";
+        int indexBis = 0;
+        long result = 0L;
+
         int[] arrayOfAddressParts = new int[4];
         for (int i = 0; i < 4; i++) {
             arrayOfAddressParts[i] = Integer.parseInt(address[i]);
         }
-
-
-        ArrayList<String> resultingHex = new ArrayList<>();
-        int indexBis = 0;
-        String zero = "0";
-        long result = 0L;
 
         for (int item : arrayOfAddressParts) {
             ArrayList<String> bits = new ArrayList<>();
@@ -84,21 +83,14 @@ public class IpAddressing {
                 resultingHex.set(indexBis, zero.concat(singleHexDigit));
             }
             indexBis++;
-
         }
 
-//        Collections.reverse(resultingHex);
-
-        StringBuilder stringOfHex = new StringBuilder();
-
-        for (int i = 0; i < resultingHex.size(); i++) {
-            stringOfHex.append(resultingHex.get(i));
+        for (String hex : resultingHex) {
+            stringOfHex.append(hex);
         }
 
-
-        for (int i = stringOfHex.length() - 1; i >= 0; i--) {
-
-            result = result + convertHexToDec(stringOfHex.charAt(i)) * (long)Math.pow(16, i);
+        for (int i = stringOfHex.length() - 1,  k = 0; i >= 0 && k < stringOfHex.length(); i--, k++) {
+            result += convertHexToDec(stringOfHex.charAt(k)) * (long)Math.pow(16, i);
         }
         return Long.toString(result);
     }
