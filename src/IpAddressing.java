@@ -90,8 +90,9 @@ public class IpAddressing {
         }
 
         for (int i = stringOfHex.length() - 1,  k = 0; i >= 0 && k < stringOfHex.length(); i--, k++) {
-            result += convertHexToDec(stringOfHex.charAt(k)) * (long)Math.pow(16, i);
-        }
+            result += convertHexToDec(stringOfHex.charAt(k)) * (long)Math.pow(16, i);               // https://www.youtube.com/watch?v=pg-HEGBpCQk
+        }                                                                                           // https://gist.github.com/LuoZijun/df2d57ab6f5217a4bd18
+                                                                                                    //https://stackoverflow.com/questions/27150879/how-to-calculate-number-of-hosts-between-two-ips-c-sharp
         return Long.toString(result);
     }
 }
