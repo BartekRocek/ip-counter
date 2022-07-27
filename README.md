@@ -1,4 +1,4 @@
-# IPcounter
+# ip-counter
 
 
 Counting no. of IPs between two addresses
